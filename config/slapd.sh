@@ -14,8 +14,11 @@ set -x
 if [ ! -e /var/lib/ldap/docker_bootstrapped ]; then
   status "configuring slapd for first run"
   rm -rf /etc/ldap/slapd.d/*
+  mkdir -p /etc/ldap/ssl
   (cd /etc/slapd-config ; tar cpf - .) | (cd /etc/ldap/slapd.d ; tar xpf - )
   chown -R openldap:openldap /etc/ldap
+  [ -f /etc/ldap/ssl/openldap-key.pem ] && chmod 600 /etc/ldap/ssl/openldap-key.pem
+  [ -f /etc/ldap/ssl/dhparam.pem ] || openssl dhparam -out /etc/ldap/ssl/dhparam.pem 2048
   enc_pw=$(slappasswd -h '{SSHA}' -s ${LDAP_ROOTPASS} | base64)
   enc_domain=$(echo -n ${LDAP_DOMAIN} | sed -e "s|^|dc=|" -e "s|\.|,dc=|g")
   dc_one=$(echo -n ${enc_domain} | sed -e "s|^dc=||" -e "s|,dc=.*$||g")

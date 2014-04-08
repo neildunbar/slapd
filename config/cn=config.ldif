@@ -6,6 +6,11 @@ olcArgsFile: /var/run/slapd/slapd.args
 olcLogLevel: none
 olcPidFile: /var/run/slapd/slapd.pid
 olcToolThreads: 1
+olcTLSDHParamFile: /etc/ldap/ssl/dhparam.pem
+olcTLSCertificateFile: /etc/ldap/ssl/openldap-cert.pem
+olcTLSCertificateKeyFile: /etc/ldap/ssl/openldap-key.pem
+olcTLSCACertificateFile: /etc/ldap/ssl/ssl-ca.pem
+olcTLSCipherSuite: HIGH:MEDIUM:SSLv2
 structuralObjectClass: olcGlobal
 entryUUID: 00dc9e14-5042-1033-9a35-ff1e70d71313
 creatorsName: cn=config

@@ -11,6 +11,8 @@ CMD ["/sbin/my_init"]
 
 # Configure apt
 RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise universe' >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 431533D8
+RUN echo 'deb http://ppa.launchpad.net/tmortensen/ppa/ubuntu precise main' >> /etc/apt/sources.list
 RUN apt-get -y update
 
 # Install slapd
@@ -23,7 +25,7 @@ ENV LDAP_DOMAIN example.com
 
 EXPOSE 389 636
 
-RUN mkdir /etc/service/slapd /etc/slapd-config
+RUN mkdir -p /etc/service/slapd /etc/slapd-config /etc/ldap/ssl
 
 ADD config /etc/slapd-config
 RUN cp /etc/slapd-config/slapd.sh /etc/service/slapd/run && chmod 755 /etc/service/slapd/run && chown root:root /etc/service/slapd/run
