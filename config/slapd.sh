@@ -25,6 +25,9 @@ if [ ! -e /var/lib/ldap/docker_bootstrapped ]; then
   sed -i -e "s|___sub_root_passwd_here___|${enc_pw}|g" \
    -e "s|___sub_domain_here___|${enc_domain}|g" \
    /etc/ldap/slapd.d/cn\=config/olcDatabase\=\{1\}mdb.ldif
+  sed -i -e "s|___sub_root_passwd_here___|${enc_pw}|g" \
+   -e "s|___sub_domain_here___|${enc_domain}|g" \
+   /etc/ldap/slapd.d/cn\=config/olcDatabase\=\{0\}config.ldif
   sed -i \
      -e "s|___sub_organization_here___|${LDAP_ORGANISATION}|g" \
      -e "s|___sub_dcone_here___|${dc_one}|g" \

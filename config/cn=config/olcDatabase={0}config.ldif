@@ -4,6 +4,9 @@ objectClass: olcDatabaseConfig
 olcDatabase: {0}config
 olcAccess: {0}to * by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external
  ,cn=auth manage by * break
+olcAccess: {1}to * by dn.exact=cn=admin,cn=config manage by * break
+olcRootDN: cn=admin,cn=config
+olcRootPW:: ___sub_root_passwd_here___
 structuralObjectClass: olcDatabaseConfig
 entryUUID: 00dca684-5042-1033-9a37-ff1e70d71313
 creatorsName: cn=config
