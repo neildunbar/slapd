@@ -22,17 +22,15 @@ if [ ! -e /var/lib/ldap/docker_bootstrapped ]; then
   enc_pw=$(slappasswd -h '{SSHA}' -s ${LDAP_ROOTPASS} | base64)
   enc_domain=$(echo -n ${LDAP_DOMAIN} | sed -e "s|^|dc=|" -e "s|\.|,dc=|g")
   dc_one=$(echo -n ${enc_domain} | sed -e "s|^dc=||" -e "s|,dc=.*$||g")
-  sed -i -e "s|___sub_root_passwd_here___|${enc_pw}|g" \
-   -e "s|___sub_domain_here___|${enc_domain}|g" \
-   /etc/ldap/slapd.d/cn\=config/olcDatabase\=\{1\}mdb.ldif
-  sed -i -e "s|___sub_root_passwd_here___|${enc_pw}|g" \
-   -e "s|___sub_domain_here___|${enc_domain}|g" \
-   /etc/ldap/slapd.d/cn\=config/olcDatabase\=\{0\}config.ldif
-  sed -i \
-     -e "s|___sub_organization_here___|${LDAP_ORGANISATION}|g" \
-     -e "s|___sub_dcone_here___|${dc_one}|g" \
-     -e "s|___sub_domain_here___|${enc_domain}|g" \
-     /etc/slapd-config/base.ldif
+
+  for f in $(find /etc/slapd-config -name \*.ldif) $(find /etc/ldap/slapd.d -name \*.ldif); do
+     sed -i \
+        -e "s|___sub_root_passwd_here___|${enc_pw}|g" \
+        -e "s|___sub_organization_here___|${LDAP_ORGANISATION}|g" \
+        -e "s|___sub_dcone_here___|${dc_one}|g" \
+        -e "s|___sub_domain_here___|${enc_domain}|g" \
+        $f
+  done
   slapadd -b ${enc_domain} -c -F /etc/ldap/slapd.d -l /etc/slapd-config/base.ldif
   chown -R openldap:openldap /var/lib/ldap
   touch /var/lib/ldap/docker_bootstrapped

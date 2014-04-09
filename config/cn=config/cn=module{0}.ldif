@@ -4,6 +4,8 @@ objectClass: olcModuleList
 cn: module{0}
 olcModulePath: /usr/lib/ldap
 olcModuleLoad: {0}back_mdb
+olcModuleLoad: {1}syncprov
+olcModuleLoad: {2}back_monitor
 structuralObjectClass: olcModuleList
 entryUUID: 00dcf792-5042-1033-9a3d-ff1e70d71313
 creatorsName: cn=config
