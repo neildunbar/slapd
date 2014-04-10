@@ -11,6 +11,9 @@ olcTLSCertificateFile: /etc/ldap/ssl/openldap-cert.pem
 olcTLSCertificateKeyFile: /etc/ldap/ssl/openldap-key.pem
 olcTLSCACertificateFile: /etc/ldap/ssl/ssl-ca.pem
 olcTLSCipherSuite: HIGH:MEDIUM:SSLv2
+olcTLSVerifyClient: ALLOW
+olcAuthzRegexp: {0}"^cn=((([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])*)\.
+ (___sub_raw_domain_here___)$" ldap:///ou=Applications,___sub_domain_here___??sub?(cn=$1.$5)
 structuralObjectClass: olcGlobal
 entryUUID: 00dc9e14-5042-1033-9a35-ff1e70d71313
 creatorsName: cn=config
