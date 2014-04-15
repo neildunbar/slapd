@@ -62,7 +62,7 @@ example also stores logs in an imported volume, and the SSL credentials on anoth
                -e LDAP_DOMAIN=mycorp.com \
                -e LDAP_ORGANISATION="My Mega Corporation" \
                -e LDAP_ROOTPASS=s3cr3tpassw0rd \
-	       -e LDAP_CLUSTER=ldap1.mycorp.com,ldap2.mycorp.com,ldap3.mycorp.com \
+               -e LDAP_CLUSTER=ldap1.mycorp.com,ldap2.mycorp.com,ldap3.mycorp.com \
                -p 10.0.0.1:389:389 -p 10.0.0.1:636:636 \
                -d ndunbar/slapd
 

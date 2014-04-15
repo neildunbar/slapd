@@ -2,7 +2,7 @@
 dn: cn=module{0}
 objectClass: olcModuleList
 cn: module{0}
-olcModulePath: /usr/lib/ldap
+olcModulePath: /opt/openldap/lib/ldap
 olcModuleLoad: {0}back_mdb
 olcModuleLoad: {1}syncprov
 olcModuleLoad: {2}back_monitor

@@ -7,16 +7,15 @@ ENV HOME /root
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+ENTRYPOINT ["/sbin/my_init"]
 
 # Configure apt
 RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise universe' >> /etc/apt/sources.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 431533D8
-RUN echo 'deb http://ppa.launchpad.net/tmortensen/ppa/ubuntu precise main' >> /etc/apt/sources.list
 RUN apt-get -y update
-
-# Install slapd
-RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y slapd
+RUN addgroup --gid 125 openldap
+RUN adduser --system --gid 125 --uid 115 --home /opt/openldap --no-create-home --disabled-login openldap
+# Install slapd dependencies
+RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y libsasl2-2 libgssapi3-heimdal libssl1.0.0 unixodbc libslp1 libwrap0
 
 # Default configuration: can be overridden at the docker command line
 ENV LDAP_ROOTPASS toor
@@ -25,8 +24,11 @@ ENV LDAP_DOMAIN example.com
 
 EXPOSE 389 636
 
-RUN mkdir -p /etc/service/slapd /etc/slapd-config /etc/ldap/ssl
+RUN mkdir -p /etc/service/slapd /etc/slapd-config /etc/ldap/ssl /opt/openldap
 
+ADD openldap /opt/openldap
+ADD openldap.sh /etc/profile.d/openldap.sh
+ADD openldap.conf /etc/ld.so.conf.d/openldap.conf
 ADD config /etc/slapd-config
 RUN cp /etc/slapd-config/slapd.sh /etc/service/slapd/run && chmod 755 /etc/service/slapd/run && chown root:root /etc/service/slapd/run
 
