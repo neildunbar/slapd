@@ -56,7 +56,8 @@ For example, to start a container running slapd for the `mycorp.com` domain,
 with data stored in `/data/ldap` on the host, use the following (this
 example also stores logs in an imported volume, and the SSL credentials on another volume):
 
-    docker run -v /data/ldap:/var/lib/ldap \
+    docker run --dns 127.0.0.1 \
+               -v /data/ldap:/var/lib/ldap \
                -v /data/slapd-log:/var/log \
                -v /data/ssl-ldap:/etc/ldap/ssl \
                -e LDAP_DOMAIN=mycorp.com \

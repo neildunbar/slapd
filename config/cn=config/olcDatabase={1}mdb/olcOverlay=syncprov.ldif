@@ -1,0 +1,4 @@
+dn: olcOverlay=syncprov
+objectClass: olcOverlayConfig
+objectClass: olcSyncProvConfig
+olcOverlay: syncprov

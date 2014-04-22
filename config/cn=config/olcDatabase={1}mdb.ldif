@@ -18,6 +18,7 @@ olcDbCheckpoint: 512 30
 olcDbIndex: objectClass eq
 olcDbIndex: cn sub
 olcDbIndex: entryCSN eq
+olcDbIndex: entryUUID eq
 structuralObjectClass: olcMdbConfig
 entryUUID: 00dd0804-5042-1033-9a3f-ff1e70d71313
 creatorsName: cn=config
