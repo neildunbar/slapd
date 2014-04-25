@@ -26,10 +26,11 @@ EXPOSE 389 636
 
 RUN mkdir -p /etc/service/slapd /etc/slapd-config /etc/ldap/ssl /opt/openldap
 
-ADD openldap /opt/openldap
+ADD openldap-bin.tar.gz /opt/openldap
 ADD openldap.sh /etc/profile.d/openldap.sh
 ADD config /etc/slapd-config
-RUN cp /etc/slapd-config/slapd.sh /etc/service/slapd/run && chmod 755 /etc/service/slapd/run && chown root:root /etc/service/slapd/run && echo "/opt/openldap/lib" >/etc/ld.so.conf.d/openldap.conf
+RUN [ -c /dev/fuse ] || mknod /dev/fuse c 10 229
+RUN cp /etc/slapd-config/slapd.sh /etc/service/slapd/run && chmod 755 /etc/service/slapd/run && chown root:root /etc/service/slapd/run && echo "/opt/openldap/lib" >/etc/ld.so.conf.d/openldap.conf && mkdir -p /opt/openldap
 
 # To store the data outside the container, mount /var/lib/ldap as a data volume
 
