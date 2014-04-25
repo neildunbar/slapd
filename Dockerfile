@@ -13,7 +13,7 @@ CMD ["/sbin/my_init"]
 RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise universe' >> /etc/apt/sources.list
 RUN apt-get -y update
 RUN addgroup --gid 125 openldap
-RUN adduser --system --gid 125 --uid 115 --home /opt/openldap --no-create-home --disabled-login openldap
+RUN adduser --system --gid 125 --uid 115 --home /opt/openldap --disabled-login openldap
 # Install slapd dependencies
 RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y libsasl2-2 libgssapi3-heimdal libssl1.0.0 unixodbc libslp1 libwrap0 dnsmasq
 
@@ -24,7 +24,7 @@ ENV LDAP_DOMAIN example.com
 
 EXPOSE 389 636
 
-RUN mkdir -p /etc/service/slapd /etc/slapd-config /etc/ldap/ssl /opt/openldap
+RUN mkdir -p /etc/service/slapd /etc/slapd-config /etc/ldap/ssl
 
 ADD openldap-bin.tar.gz /opt/openldap
 ADD openldap.sh /etc/profile.d/openldap.sh
